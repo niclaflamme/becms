@@ -15,7 +15,6 @@ model User {
   email    String @unique
   password String
 
-  userDomainId Int
   userDomains  UserDomain[]
 }
 
@@ -23,7 +22,6 @@ model Domain {
   id   Int    @id @default(autoincrement())
   name String @unique
 
-  userDomainId Int
   userDomains  UserDomain[]
 }
 
