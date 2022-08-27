@@ -12,16 +12,23 @@ router.post('/login', async function(req, res, next ) {
   const email = req.body.email
   const password = req.body.password
 
-  const user = await prisma.user.findUnique({
-    where: {
-      email: email
-    },
-    select: { email: true, 
-    password: true, }
+  try {
+    const user = await prisma.user.findFirst({
+      where: {
+        email: email
+      },
+      select: { email: true, 
+      password: true, }
+  
+    })
+  
+   return res.send( user )
+  }
+  catch(error) {
+    let i = error;
+  }
+  
 
-  })
-
- return res.send( user )
 
 });
 
