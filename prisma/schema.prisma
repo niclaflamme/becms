@@ -11,7 +11,25 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  password String
+  id         Int          @id @default(autoincrement())
+  email      String       @unique
+  password   String
+  UserDomain UserDomain[]
+}
+
+model Domain {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  UserDomain   UserDomain[]
+  userDomainId Int
+}
+
+model UserDomain {
+  id       Int @id @default(autoincrement())
+  userId   Int
+  domainId Int
+
+  User   User   @relation(fields: [userId], references: [id])
+  Domain Domain @relation(fields: [domainId], references: [id])
 }
