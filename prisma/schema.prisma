@@ -11,18 +11,20 @@ datasource db {
 }
 
 model User {
-  id         Int          @id @default(autoincrement())
-  email      String       @unique
-  password   String
-  UserDomain UserDomain[]
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+
+  userDomainId Int
+  userDomains  UserDomain[]
 }
 
 model Domain {
   id   Int    @id @default(autoincrement())
   name String @unique
 
-  UserDomain   UserDomain[]
   userDomainId Int
+  userDomains  UserDomain[]
 }
 
 model UserDomain {
@@ -30,6 +32,23 @@ model UserDomain {
   userId   Int
   domainId Int
 
-  User   User   @relation(fields: [userId], references: [id])
-  Domain Domain @relation(fields: [domainId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+  domain Domain @relation(fields: [domainId], references: [id])
+}
+
+model Article {
+  id      Int    @id @default(autoincrement())
+  title   String
+  content String
+
+  contentBlockId Int
+  contentBlocks  ContentBlock[]
+}
+
+model ContentBlock {
+  id        Int @id @default(autoincrement())
+  articleId Int
+  order     Int
+
+  article Article @relation(fields: [articleId], references: [id])
 }
