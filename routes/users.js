@@ -1,30 +1,23 @@
 var express = require('express');
-var router = express.Router();
 const bcrypt = require('bcryptjs')
+
+var router = express.Router();
+
 /* GET users listing. */
 router.post('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
 router.post('/signup', function(req, res, next) {
-  console.log(req.body.password);
-  var pass = req.body.password;
-  const hashPass = saltHash(pass);
-  res.send('hashed', hashPass);
-
+  var password = req.body.password;
+  const hash = saltHash(password);
+  res.send({ hash });
 });
 
-function saltHash(pass){
-  console.log('pass in hashPass is ', pass)
-  const saltRounds = 12;
-  bcrypt.genSalt(saltRounds, function(err, salt) {
-    console.log('salt', salt);
-    bcrypt.hash(pass, salt, function(err, hash) {
+function saltHash(password){
+  const salt = bcrypt.genSaltSync(12)
+  const hash = bcrypt.hashSync(password, salt);
 
-    // returns hash
-    console.log('hash', hash);
-    return hash;
-    });
-  });
+  return hash
 }
 module.exports = router;
