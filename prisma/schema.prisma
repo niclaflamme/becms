@@ -16,7 +16,7 @@ model User {
   password String
 
   userDomainId Int
-  userDomain   UserDomain[]
+  userDomains  UserDomain[]
 }
 
 model Domain {
@@ -32,8 +32,8 @@ model UserDomain {
   userId   Int
   domainId Int
 
-  User   User   @relation(fields: [userId], references: [id])
-  Domain Domain @relation(fields: [domainId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+  domain Domain @relation(fields: [domainId], references: [id])
 }
 
 model Article {
@@ -42,7 +42,7 @@ model Article {
   content String
 
   contentBlockId Int
-  contentBlock   ContentBlock[]
+  contentBlocks  ContentBlock[]
 }
 
 model ContentBlock {
@@ -50,5 +50,5 @@ model ContentBlock {
   articleId Int
   order     Int
 
-  Article Article @relation(fields: [articleId], references: [id])
+  article Article @relation(fields: [articleId], references: [id])
 }
